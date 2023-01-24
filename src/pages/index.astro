@@ -1,0 +1,27 @@
+---
+import Layout from "../layouts/Layout.astro";
+---
+
+<Layout title="Welcome to Workers Types Diff">
+  <main>
+    <p>
+      Workers Types Diff shows the changes in the <a
+        href="https://www.npmjs.com/package/@cloudflare/workers-types"
+        target="_blank"><code>@cloudflare/workers-types</code></a
+      > package in unified diff format. You can choose one of compatibility dates
+      in the sidebar to easily see what were changed in each update.
+    </p>
+    <p>
+      This website contains derivative works of MIT/Apache-2.0 licensed
+      intellectual property owned by Cloudflare Workers DevProd Team. I (Yudai
+      Nakata) own the copyright for the rest of the website.
+    </p>
+  </main>
+</Layout>
+
+<style>
+  main {
+    max-width: 80ch;
+    line-height: 1.5;
+  }
+</style>

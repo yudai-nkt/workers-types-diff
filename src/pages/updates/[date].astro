@@ -1,0 +1,20 @@
+---
+import { Code } from "astro/components";
+
+import diffs from "../../../diffs/diffs.json";
+import Layout from "../../layouts/Layout.astro";
+
+export const getStaticPaths = () =>
+  Object.keys(diffs).map((date) => ({ params: { date } }));
+
+const { date } = Astro.params;
+---
+
+<Layout title={`What's new in ${date} | Workers Types Diff`}>
+  <p>Below is the change introduced in compatibility date {date}:</p>
+  <Code
+    code={(diffs as Record<string, string>)[date!]}
+    lang="ts"
+    theme="vitesse-light"
+  />
+</Layout>

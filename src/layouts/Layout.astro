@@ -1,0 +1,97 @@
+---
+import diffs from "../../diffs/diffs.json";
+
+export type Props = {
+  title: string;
+};
+
+const { title } = Astro.props;
+const dates = Object.keys(diffs).sort((a, b) => a.localeCompare(b));
+---
+
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width" />
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    <meta name="generator" content={Astro.generator} />
+    <title>{title}</title>
+  </head>
+  <body
+    ><div id="container">
+      <header>
+        <a href="/">Workers Types Diff</a>
+      </header>
+      <nav>
+        Compatibility dates:
+        <ul>
+          {
+            dates.map((date) => (
+              <li>
+                <a href={`/updates/${date}`}>{date}</a>
+              </li>
+            ))
+          }
+        </ul>
+      </nav>
+      <article>
+        <slot />
+      </article>
+      <footer>
+        &copy; 2021 Cloudflare Workers DevProd Team, 2023 Yudai Nakata
+      </footer>
+    </div>
+  </body>
+</html>
+<style is:global>
+  :root {
+    --bg-color: #f6f6f6;
+  }
+  html {
+    font-family: system-ui, sans-serif;
+    background-color: var(--bg-color);
+  }
+  body {
+    display: flex;
+    justify-content: center;
+  }
+  body > #container {
+    display: grid;
+    grid-template:
+      "header header " 4em
+      "navbar article" 1fr
+      "footer footer" 2.5em / 200px 1fr;
+    height: 100vh;
+    width: 960px;
+  }
+  header {
+    grid-area: header;
+    align-self: center;
+    font-size: 1.5em;
+  }
+  nav {
+    grid-area: navbar;
+  }
+  article {
+    grid-area: article;
+    place-self: start;
+  }
+  footer {
+    grid-area: footer;
+    place-self: center;
+  }
+  code {
+    font-family: Menlo, Monaco, Lucida Console, Liberation Mono,
+      DejaVu Sans Mono, Bitstream Vera Sans Mono, Courier New, monospace;
+  }
+  .astro-code {
+    padding: 16px;
+    border-radius: 8px;
+    width: calc(32px + 83ch);
+    max-height: 80vh;
+  }
+  p:first-child {
+    margin-block-start: 0;
+  }
+</style>
