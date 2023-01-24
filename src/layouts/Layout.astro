@@ -1,4 +1,6 @@
 ---
+import GithubCorners from "../components/github-corners.astro";
+
 import diffs from "../../diffs/diffs.json";
 
 export type Props = {
@@ -19,7 +21,7 @@ const dates = Object.keys(diffs).sort((a, b) => a.localeCompare(b));
     <title>{title}</title>
   </head>
   <body
-    ><div id="container">
+    ><GithubCorners /><div id="container">
       <header>
         <a href="/">Workers Types Diff</a>
       </header>
