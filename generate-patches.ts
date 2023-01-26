@@ -16,7 +16,7 @@ got
   .pipe(extract({ cwd: extractDir }))
   .on("finish", () => {
     const source = join(extractDir, "package");
-    const compatibilityDates = readdirSync(join(source), {
+    const compatibilityDates = readdirSync(source, {
       withFileTypes: true,
     }).filter(
       (dirent) => dirent.isDirectory() && /\d{4}-\d{2}-\d{2}/.test(dirent.name)
