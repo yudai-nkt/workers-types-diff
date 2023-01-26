@@ -11,36 +11,37 @@ const metadata = await got(
 got
   //@ts-expect-error
   .stream(metadata.versions[metadata["dist-tags"].latest].dist.tarball)
-  .pipe(extract({ cwd: "diffs" }));
+  .pipe(extract({ cwd: "diffs" }))
+  .on("finish", () => {
+    const compatibilityDates = readdirSync("diffs/package", {
+      withFileTypes: true,
+    }).filter(
+      (dirent) => dirent.isDirectory() && /\d{4}-\d{2}-\d{2}/.test(dirent.name)
+    );
 
-const compatibilityDates = readdirSync("diffs/package", {
-  withFileTypes: true,
-}).filter(
-  (dirent) => dirent.isDirectory() && /\d{4}-\d{2}-\d{2}/.test(dirent.name)
-);
+    const diffs: Record<string, string> = {};
 
-const diffs: Record<string, string> = {};
+    let index = compatibilityDates.length;
 
-let index = compatibilityDates.length;
+    while (index-- > 0) {
+      const newVersion = compatibilityDates[index].name;
+      const oldVersion =
+        index === 0 ? "oldest" : compatibilityDates[index - 1].name;
+      const newDefinition = readFileSync(
+        join("diffs/package", newVersion, "index.d.ts"),
+        { encoding: "utf8" }
+      );
+      const oldDefinition = readFileSync(
+        join("diffs/package", oldVersion, "index.d.ts"),
+        { encoding: "utf8" }
+      );
+      diffs[newVersion] = createTwoFilesPatch(
+        oldVersion,
+        newVersion,
+        oldDefinition,
+        newDefinition
+      );
+    }
 
-while (index-- > 0) {
-  const newVersion = compatibilityDates[index].name;
-  const oldVersion =
-    index === 0 ? "oldest" : compatibilityDates[index - 1].name;
-  const newDefinition = readFileSync(
-    join("diffs/package", newVersion, "index.d.ts"),
-    { encoding: "utf8" }
-  );
-  const oldDefinition = readFileSync(
-    join("diffs/package", oldVersion, "index.d.ts"),
-    { encoding: "utf8" }
-  );
-  diffs[newVersion] = createTwoFilesPatch(
-    oldVersion,
-    newVersion,
-    oldDefinition,
-    newDefinition
-  );
-}
-
-writeFileSync("diffs/diffs.json", JSON.stringify(diffs));
+    writeFileSync("diffs/diffs.json", JSON.stringify(diffs));
+  });
