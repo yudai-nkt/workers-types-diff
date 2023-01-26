@@ -19,6 +19,4 @@ pnpm-debug.log*
 # macOS-specific files
 .DS_Store
 
-diffs/*.json
-diffs/package/*
-!diffs/package/.gitkeep
+patches.json

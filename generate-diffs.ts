@@ -1,9 +1,12 @@
 import { createTwoFilesPatch } from "diff";
 import got from "got";
-import { readdirSync, readFileSync, writeFileSync } from "node:fs";
+import { mkdtempSync, readdirSync, readFileSync, writeFileSync } from "node:fs";
+import { tmpdir } from "node:os";
 import { join } from "node:path";
 import { extract } from "tar";
 
+const extractDir = mkdtempSync(join(tmpdir(), "workers-types-diff"));
+console.log(extractDir);
 const metadata = await got(
   "https://registry.npmjs.org/@cloudflare/workers-types"
 ).json();
@@ -11,9 +14,10 @@ const metadata = await got(
 got
   //@ts-expect-error
   .stream(metadata.versions[metadata["dist-tags"].latest].dist.tarball)
-  .pipe(extract({ cwd: "diffs" }))
+  .pipe(extract({ cwd: extractDir }))
   .on("finish", () => {
-    const compatibilityDates = readdirSync("diffs/package", {
+    const source = join(extractDir, "package");
+    const compatibilityDates = readdirSync(join(source), {
       withFileTypes: true,
     }).filter(
       (dirent) => dirent.isDirectory() && /\d{4}-\d{2}-\d{2}/.test(dirent.name)
@@ -28,11 +32,11 @@ got
       const oldVersion =
         index === 0 ? "oldest" : compatibilityDates[index - 1].name;
       const newDefinition = readFileSync(
-        join("diffs/package", newVersion, "index.d.ts"),
+        join(source, newVersion, "index.d.ts"),
         { encoding: "utf8" }
       );
       const oldDefinition = readFileSync(
-        join("diffs/package", oldVersion, "index.d.ts"),
+        join(source, oldVersion, "index.d.ts"),
         { encoding: "utf8" }
       );
       diffs[newVersion] = createTwoFilesPatch(
@@ -43,5 +47,5 @@ got
       );
     }
 
-    writeFileSync("diffs/diffs.json", JSON.stringify(diffs));
+    writeFileSync("patches.json", JSON.stringify(diffs));
   });
