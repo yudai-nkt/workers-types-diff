@@ -41,7 +41,8 @@ const dates = Object.keys(diffs).sort((a, b) => a.localeCompare(b));
         <slot />
       </article>
       <footer>
-        &copy; 2021 Cloudflare Workers DevProd Team, 2023 Yudai Nakata
+        <p>&copy; 2021 Cloudflare Workers DevProd Team, 2023 Yudai Nakata</p>
+        <p>Workers Types Diff is not affiliated by Cloudflare, Inc. in any way, and is just a personal project.</p>
       </footer>
     </div>
   </body>
@@ -63,7 +64,7 @@ const dates = Object.keys(diffs).sort((a, b) => a.localeCompare(b));
     grid-template:
       "header header " 4em
       "navbar article" 1fr
-      "footer footer" 2.5em / 200px 1fr;
+      "footer footer" 3em / 200px 1fr;
     height: 100vh;
     width: 960px;
   }
@@ -81,7 +82,12 @@ const dates = Object.keys(diffs).sort((a, b) => a.localeCompare(b));
   }
   footer {
     grid-area: footer;
-    place-self: center;
+    display: grid;
+    place-items: center;
+    font-size: 0.9em;
+  }
+  footer > p {
+    margin: 0;
   }
   code {
     font-family: Menlo, Monaco, Lucida Console, Liberation Mono,
