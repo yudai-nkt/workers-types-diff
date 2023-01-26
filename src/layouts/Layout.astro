@@ -9,16 +9,28 @@ export type Props = {
 
 const { title } = Astro.props;
 const dates = Object.keys(diffs).sort((a, b) => a.localeCompare(b));
+const url = new URL(Astro.url.pathname, Astro.site);
 ---
 
 <!DOCTYPE html>
 <html lang="en">
-  <head>
+  <head prefix="og: http://ogp.me/ns#">
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width" />
     <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
     <meta name="generator" content={Astro.generator} />
     <title>{title}</title>
+    <meta property="og:title" content={title} />
+    <meta
+      property="og:type"
+      content={url.pathname === "/" ? "website" : "article"}
+    />
+    <meta property="og:url" content={url.toString()} />
+    <meta
+      property="og:description"
+      content="Easily grasp what were changed in TypeScript definitions for Cloudflare Workers."
+    />
+    <meta property="og:site_name" content="Workers Types Diff" />
   </head>
   <body
     ><GithubCorners /><div id="container">

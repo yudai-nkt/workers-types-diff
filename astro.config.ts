@@ -1,3 +1,5 @@
 import type { AstroUserConfig } from "astro/config";
 
-export default {} satisfies AstroUserConfig;
+export default {
+  site: "https://workers-types-diff.pages.dev",
+} satisfies AstroUserConfig;
