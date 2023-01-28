@@ -12,9 +12,18 @@ const { date } = Astro.params;
 
 <Layout title={`What's new in ${date} | Workers Types Diff`}>
   <p>Below is the change introduced in compatibility date {date}:</p>
+  <button id="copy-to-clipboard">COPY-TO-CLIPBOARD</button>
   <Code
     code={(diffs as Record<string, string>)[date!]}
     lang="ts"
     theme="vitesse-light"
   />
 </Layout>
+<script>
+  const copyToClipBoard = () => {};
+  const button = document.querySelector("#copy-to-clipboard")!
+  button.addEventListener("click", async () =>{
+    const patch = document.querySelector<HTMLPreElement>("pre.astro-code");
+    await navigator.clipboard.writeText(patch!.innerText);
+  })
+</script>
