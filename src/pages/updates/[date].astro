@@ -31,7 +31,6 @@ const { date } = Astro.params;
   button.addEventListener("click", async () =>{
     const patch = document.querySelector<HTMLPreElement>("pre.astro-code");
     await navigator.clipboard.writeText(patch!.innerText);
-    alert(patch!.innerText)
   })
 </script>
 <style>
