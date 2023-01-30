@@ -20,18 +20,18 @@ const url = new URL(Astro.url.pathname, Astro.site);
     <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
     <meta name="generator" content={Astro.generator} />
     <title>{title}</title>
+    <meta
+      property="og:description"
+      content="Easily grasp what were changed in TypeScript definitions for Cloudflare Workers."
+    />
     <meta property="og:image" content="/ogp-image.png" />
+    <meta property="og:site_name" content="Workers Types Diff" />
     <meta property="og:title" content={title} />
     <meta
       property="og:type"
       content={url.pathname === "/" ? "website" : "article"}
     />
     <meta property="og:url" content={url.toString()} />
-    <meta
-      property="og:description"
-      content="Easily grasp what were changed in TypeScript definitions for Cloudflare Workers."
-    />
-    <meta property="og:site_name" content="Workers Types Diff" />
   </head>
   <body
     ><GithubCorners /><div id="container">
