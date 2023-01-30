@@ -20,3 +20,4 @@ pnpm-debug.log*
 .DS_Store
 
 patches.json
+public/ogp-image.png
