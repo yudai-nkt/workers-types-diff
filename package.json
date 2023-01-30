@@ -6,7 +6,7 @@
   "scripts": {
     "start": "astro dev",
     "build": "astro build",
-    "prebuild": "tsm generate-patches.ts && tsm scripts/convert-ogp-image.ts",
+    "prebuild": "tsm scripts/generate-patches.ts && tsm scripts/convert-ogp-image.ts",
     "fix:prettier": "prettier --write src *.ts",
     "preview": "astro preview"
   },
