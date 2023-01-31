@@ -6,7 +6,9 @@
   "scripts": {
     "start": "astro dev",
     "build": "astro build",
-    "prebuild": "tsm generate-patches.ts",
+    "generate:ogp-image": "tsm scripts/convert-ogp-image.ts",
+    "generate:patches": "tsm scripts/generate-patches.ts",
+    "prebuild": "run-s --continue-on-error generate:*",
     "fix:prettier": "prettier --write src *.ts",
     "preview": "astro preview"
   },
@@ -17,11 +19,14 @@
   "devDependencies": {
     "@types/diff": "^5.0.2",
     "@types/node": "^18.11.18",
+    "@types/sharp": "^0.31.1",
     "@types/tar": "^6.1.3",
     "diff": "^5.1.0",
     "got": "^12.5.3",
+    "npm-run-all2": "^6.0.4",
     "prettier": "^2.8.3",
     "prettier-plugin-astro": "^0.7.2",
+    "sharp": "^0.31.3",
     "tar": "^6.1.13",
     "tsm": "^2.3.0"
   }
