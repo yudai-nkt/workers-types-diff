@@ -13,6 +13,11 @@ const highlighter = await getHighlighter({
 const tokens = highlighter.codeToThemedTokens(code, "typescript");
 const html = shiki.renderToHtml(tokens, {
   elements: {
+    pre: ({ className, children, style }) =>
+      `<pre class="${className.replace(
+        "shiki",
+        "astro-code"
+      )}" style="${style}; overflow-x: auto;">${children}</pre>`,
     line: ({ className, children }) => {
       if (/^<span [^>]*>-/.test(children)) {
         className = `${className} deletion`;
@@ -26,8 +31,4 @@ const html = shiki.renderToHtml(tokens, {
 });
 ---
 
-<Fragment
-  set:html={html
-    .replace(/<pre class="(.*?)shiki(.*?)"/, '<pre class="$1astro-code$2"')
-    .replace(/style="(.*?)"/, 'style="$1; overflow-x: auto;"')}
-/>
+<Fragment set:html={html} />
