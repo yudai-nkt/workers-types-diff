@@ -1,0 +1,34 @@
+---
+import shiki, { getHighlighter } from "shiki";
+
+export type Props = {
+  code: string;
+};
+const { code } = Astro.props;
+
+const highlighter = await getHighlighter({
+  theme: "vitesse-light",
+  langs: ["typescript"],
+});
+const tokens = highlighter.codeToThemedTokens(code, "typescript");
+const html = shiki.renderToHtml(tokens, {
+  elements: {
+    pre: ({ className, children, style }) =>
+      `<pre class="${className.replace(
+        "shiki",
+        "astro-code"
+      )}" style="${style}; overflow-x: auto;">${children}</pre>`,
+    line: ({ className, children }) => {
+      if (/^<span [^>]*>-/.test(children)) {
+        className = `${className} deletion`;
+      }
+      if (/^<span [^>]*>\+/.test(children)) {
+        className = `${className} addition`;
+      }
+      return `<span class="${className}">${children}</span>`;
+    },
+  },
+});
+---
+
+<Fragment set:html={html} />

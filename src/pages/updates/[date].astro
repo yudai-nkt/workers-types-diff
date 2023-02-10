@@ -1,9 +1,9 @@
 ---
-import { Code } from "astro/components";
 import { Icon } from "astro-icon";
 
 import diffs from "../../../patches.json";
 import Layout from "../../layouts/Layout.astro";
+import DiffWithBackgroundHighlight from "../../components/diff-with-background-highlight.astro";
 
 export const getStaticPaths = () =>
   Object.keys(diffs).map((date) => ({ params: { date } }));
@@ -15,11 +15,7 @@ const { date } = Astro.params;
   <p>Below is the change introduced in compatibility date {date}:</p>
   <div id="diff-container">
     <div>
-      <Code
-        code={(diffs as Record<string, string>)[date!]}
-        lang="ts"
-        theme="vitesse-light"
-      />
+      <DiffWithBackgroundHighlight code={(diffs as Record<string, string>)[date!]}/>
     </div>
     <button id="copy-to-clipboard">
       <Icon name="octicon:copy-24" height="24px"/>
@@ -55,5 +51,13 @@ const { date } = Astro.params;
   }
   #diff-container:not(:hover) > #copy-to-clipboard {
     display: none;
+  }
+</style>
+<style is:global>
+  .deletion {
+    background-color: #ffebe9;
+  }
+  .addition {
+    background-color: #e6ffec;
   }
 </style>
