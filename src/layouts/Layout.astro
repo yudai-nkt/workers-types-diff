@@ -40,7 +40,7 @@ const url = new URL(Astro.url.pathname, Astro.site);
       </header>
       <nav>
         Compatibility dates:
-        <ul>
+        <ul class="navbar">
           {
             dates.map((date) => (
               <li>
@@ -121,7 +121,22 @@ const url = new URL(Astro.url.pathname, Astro.site);
   p:first-child {
     margin-block-start: 0;
   }
-  li:not(:first-child) {
-    margin-top: 8px;
+  ul.navbar {
+    list-style-type: none;
+    padding-left: 12px;
+  }
+  .navbar > li {
+    padding-right: 64px;
+  }
+  .navbar > li > a {
+    display: flex;
+    align-items: center;
+    height: 2em;
+    padding: 0 0.5em;
+    color: #000000;
+    text-decoration: none;
+  }
+  .navbar > li > a:hover {
+    background-color: #dedede;
   }
 </style>
