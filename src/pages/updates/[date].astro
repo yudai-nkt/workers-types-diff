@@ -12,7 +12,8 @@ const { date } = Astro.params;
 ---
 
 <Layout title={`What's new in ${date} | Workers Types Diff`}>
-  <p>Below is the change introduced in compatibility date {date}:</p>
+  <h2>{date}</h2>
+  <p>Below is the change introduced in this compatibility date:</p>
   <div id="diff-container">
     <div>
       <DiffWithBackgroundHighlight

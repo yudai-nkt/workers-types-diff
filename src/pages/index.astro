@@ -4,18 +4,21 @@ import Layout from "../layouts/Layout.astro";
 
 <Layout title="Welcome to Workers Types Diff">
   <main>
+    <h2>What is this website?</h2>
     <p>
-      Workers Types Diff shows the changes in the <a
+      Workers Types Diff is the changelog of the TypeScript definitions for
+      Cloudflare Workers, which are published as the <a
         href="https://www.npmjs.com/package/@cloudflare/workers-types"
         target="_blank"><code>@cloudflare/workers-types</code></a
-      > package in unified diff format. You can choose one of compatibility dates
-      in the sidebar to easily see what were changed in each update.
+      >
+      package. You can choose a compatibility date in the navigation bar to easily
+      see what were changed in each update.
     </p>
+    <h2>Copyright notice</h2>
     <p>
       This website mainly consists of derivative works of MIT/Apache-2.0
-      licensed intellectual property owned by Cloudflare Workers DevProd Team. I
-      (Yudai Nakata) am the copyright holder for the rest of the website unless
-      otherwise noted.
+      licensed IP owned by Cloudflare Workers DevProd Team. I (Yudai Nakata) am
+      the copyright holder for the rest of the website unless otherwise noted.
     </p>
   </main>
 </Layout>
@@ -24,5 +27,8 @@ import Layout from "../layouts/Layout.astro";
   main {
     max-width: 80ch;
     line-height: 1.5;
+  }
+  code {
+    font-size: 0.9em;
   }
 </style>
