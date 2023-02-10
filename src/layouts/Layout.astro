@@ -33,8 +33,9 @@ const url = new URL(Astro.url.pathname, Astro.site);
     />
     <meta property="og:url" content={url.toString()} />
   </head>
-  <body
-    ><GithubCorners /><div id="container">
+  <body>
+    <GithubCorners />
+    <div id="container">
       <header>
         <a href="/">Workers Types Diff</a>
       </header>
