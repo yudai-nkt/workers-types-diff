@@ -15,19 +15,21 @@ const { date } = Astro.params;
   <p>Below is the change introduced in compatibility date {date}:</p>
   <div id="diff-container">
     <div>
-      <DiffWithBackgroundHighlight code={(diffs as Record<string, string>)[date!]}/>
+      <DiffWithBackgroundHighlight
+        code={(diffs as Record<string, string>)[date!]}
+      />
     </div>
     <button id="copy-to-clipboard">
-      <Icon name="octicon:copy-24" height="24px"/>
+      <Icon name="octicon:copy-24" height="24px" />
     </button>
   </div>
 </Layout>
 <script>
-  const button = document.querySelector("#copy-to-clipboard")!
-  button.addEventListener("click", async () =>{
+  const button = document.querySelector("#copy-to-clipboard")!;
+  button.addEventListener("click", async () => {
     const patch = document.querySelector<HTMLPreElement>("pre.astro-code");
     await navigator.clipboard.writeText(patch!.innerText);
-  })
+  });
 </script>
 <style>
   #diff-container {
@@ -35,7 +37,7 @@ const { date } = Astro.params;
     grid-template-columns: 1fr 32px;
     grid-template-rows: 32px 1fr;
   }
-  #diff-container > div  {
+  #diff-container > div {
     grid-area: 1 / 1 / 3 / 3;
   }
   #copy-to-clipboard {
